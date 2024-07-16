@@ -1,0 +1,34 @@
+<template>
+  <div class="x-header">
+    <strong class="header-text">Павлов Александр</strong>
+    <button class="btn">Выход</button>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "AppHeader"
+}
+</script>
+
+<style scoped>
+
+.x-header {
+  width: 100%;
+  border: 2px solid teal;
+  padding: 10px 15px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.btn{
+  align-self: flex-end;
+  padding: 10px 15px;
+  background: none;
+  color: teal;
+  border: 1px solid teal;
+}
+</style>
