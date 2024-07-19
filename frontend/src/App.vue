@@ -1,8 +1,16 @@
 <template>
   <div class="main-block">
     <app-header></app-header>
-    <dish-form @create="createDish"></dish-form>
-    <dish-list :dishes="dishes"></dish-list>
+    <div class="app-btns">
+      <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
+      <pavlov-btn @click="showDialog" class="add-btn">Добавить блюдо</pavlov-btn>
+    </div>
+    
+    <pavlov-dialog v-model="dialogVisible">
+      <dish-form @create="createDish"></dish-form>
+    </pavlov-dialog>
+    
+    <dish-list :dishes="dishes" @remove="removeDish"></dish-list>
   </div>
 </template>
 
@@ -20,6 +28,7 @@ export default{
     return{
       dishes:[
         {
+          id:1,
           dishName:'Суп гороховый',
           price:'45',
           time:'10',
@@ -27,16 +36,30 @@ export default{
           cookName:'Харитонов Захар'
         }
       ],
-      dishName:'',
-      price:'',
-      time:'',
-      type:'',
-      cookName:'',
+      dialogVisible: false,
+      selectedSort: '',
+      sortOptions: [
+        {value: 'dishName', name: "По названию блюда"},
+        {value: 'cookName', name: "По имени повара"}
+      ]
     }
   },
   methods:{
     createDish(dish){
       this.dishes.push(dish)
+    },
+    removeDish(dish){
+      this.dishes = this.dishes.filter(d => d.id !== dish.id)
+    },
+    showDialog(){
+      this.dialogVisible = true
+    }
+  },
+  watch: {
+    selectedSort(newValue){
+      this.dishes.sort((dish1, dish2)=>{
+        return dish1[newValue].localeCompare(dish2[newValue])
+      })
     }
   }
 }
@@ -57,5 +80,11 @@ body {
   padding: 20px;
   max-width: 60%;
  margin: auto;
+}
+
+.app-btns{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

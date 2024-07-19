@@ -1,37 +1,32 @@
 <template>
     <form @submit.prevent>
       <h3>Добавить блюдо</h3>
-      <input
+      <pavlov-input
        v-model="dish.dishName"
-       class="input"
        type="text"
        placeholder="Название"
-      >
-      <input
-       v-model="dish.price"
-       class="input" 
+      ></pavlov-input>
+      <pavlov-input
+       v-model="dish.price" 
        type="text" 
        placeholder="Цена"
-      >
-      <input
-       v-model="dish.time"
-       class="input" 
+      ></pavlov-input>
+      <pavlov-input
+       v-model="dish.time" 
        type="text" 
        placeholder="Время подачи"
-      >
-      <input
-       v-model="dish.type"
-       class="input" 
+      ></pavlov-input>
+      <pavlov-input
+       v-model="dish.type" 
        type="text" 
        placeholder="Тип блюда"
-      >
-      <input
-       v-model="dish.cookName" 
-       class="input" 
+      ></pavlov-input>
+      <pavlov-input
+       v-model="dish.cookName"  
        type="text" 
        placeholder="Повар"
-      >
-      <button class="btn" @click="createDish">Добавить</button>
+      ></pavlov-input>
+      <pavlov-btn @click="createDish" style="align-self: flex-end;" class="form-btn">Добавить</pavlov-btn>
     </form>
 </template>
 
@@ -40,6 +35,7 @@
         data(){
             return {
                 dish: {
+                    id: Date.now(),
                     dishName:'',
                     price:'',
                     time:'',
@@ -50,8 +46,10 @@
         },
         methods:{
             createDish(){
+                console.log(1)
                 this.$emit('create', this.dish)
                 this.dish = {
+                    id: Date.now(),
                     dishName:'',
                     price:'',
                     time:'',
@@ -64,22 +62,6 @@
 </script>
 
 <style scoped>
-.input{
-  width: 100%;
-  border: 1px solid teal;
-  padding: 10px 15px;
-  margin-top: 15px;
-}
-
-.btn{
-  margin-top: 15px;
-  align-self: flex-end;
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
-}
-
 form{
   margin-top: 15px;
   display: flex;
