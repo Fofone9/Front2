@@ -28,19 +28,21 @@ export const store = {
         }
     },
     actions: {
-        async login({commit}, {username, password, email, router}) {
+        async login({commit}, {username, password, router}) {
             try {
-                const response = await axios.post("http://localhost:8000/api-token-auth/", {
-                  username: username,
-                  password: password,
-                  email: email,
+                const response = await axios.post("http://fofone9.pythonanywhere.com/api-token-auth/", {
+                  'username': username,
+                  'password': password,
                 })
                 const token = response.data.token
                 await commit("setToken", token, username, password)
-                router.push("/user")
+                router.push('/')
             } catch (error) {
                 alert("Пароль или логин неверны!")
             }
         },
+        removeToken({commit}){
+            commit('removeToken', state)
+        }
     },
 }

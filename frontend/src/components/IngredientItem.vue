@@ -4,8 +4,8 @@
         <td>
             <div class="ingredient-description">
                 <ul >
-                    <li>Цена: {{ ingredient.price }} рублей</li>
-                    <li>Калорийность: {{ ingredient.calories }}</li>
+                    <li>Цена: {{ ingredient.cost }} рублей</li>
+                    <li>Калорийность: {{ ingredient.calorie_content }}</li>
                 </ul>
 
                 <div class="ingredient-btns">

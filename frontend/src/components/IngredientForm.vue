@@ -7,12 +7,12 @@
        placeholder="Название"
       ></pavlov-input>
       <pavlov-input
-       v-model="ingredient.price" 
+       v-model="ingredient.cost" 
        type="text" 
        placeholder="Цена"
       ></pavlov-input>
       <pavlov-input
-       v-model="ingredient.calories" 
+       v-model="ingredient.calorie_content" 
        type="text" 
        placeholder="Калорийность"
       ></pavlov-input>
@@ -25,22 +25,19 @@
         data(){
             return {
                 ingredient: {
-                    id: Date.now(),
                     name:'',
-                    price:'',
-                    calories: ''
+                    cost:'',
+                    calorie_content: ''
                 }
             }
         },
         methods:{
             createingredient(){
-                console.log(1)
                 this.$emit('create', this.ingredient)
                 this.ingredient = {
-                    id: Date.now(),
                     name:'',
-                    price:'',
-                    calories: ''
+                    cost:'',
+                    calorie_content: ''
                 }
             }
         }

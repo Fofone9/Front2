@@ -23,4 +23,16 @@ export default {
 body {
   background-color: #f6f6f6;
 }
+  
+.main-block {
+    padding: 20px;
+    max-width: 60%;
+   margin: auto;
+  }
+  
+  .app-btns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 </style>

@@ -1,13 +1,19 @@
 <template>
   <div class="x-header">
     <strong class="header-text">Павлов Александр</strong>
-    <button class="btn">Выход</button>
+    <button class="btn" @click="logOut">Выход</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AppHeader"
+  name: "AppHeader",
+  methods:{
+    logOut(){
+      this.$store.commit('login/removeToken')
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 

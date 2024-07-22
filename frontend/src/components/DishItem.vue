@@ -1,13 +1,10 @@
 <template>
     <tr>
-        <td>{{ dish.dishName }}</td>
+        <td>{{ dish.name }}</td>
         <td>
             <div class="dish-description">
                 <ul >
-                    <li>Тип: {{ dish.type.toUpperCase() }}</li>
-                    <li>Время подачи: {{ dish.time }} минут</li>
-                    <li>Цена: {{ dish.price }} рублей</li>
-                    <li>Повар: {{ dish.cookName }}</li>
+                    <li>Тип: {{ dish.dish_type.toUpperCase() }}</li>
                 </ul>
 
                 <div class="dish-btns">
