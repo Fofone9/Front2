@@ -1,7 +1,9 @@
 <template>
+  <div>
+    <Navbar></Navbar>
     <div class="main-block">
       <app-header></app-header>
-      <pavlov-btn @click="fetchCooks">получить поваров</pavlov-btn>
+      <pavlov-btn @click="fetchCooks">Обновить</pavlov-btn>
       <div class="app-btns">
         <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
         <pavlov-btn @click="showDialog" class="add-btn">Добавить повара</pavlov-btn>
@@ -11,24 +13,29 @@
         <cook-form @create="createcook"></cook-form>
       </pavlov-dialog>
       
-      <cook-list :cooks="cooks" @remove="removecook"></cook-list>
+      <cook-list :cooks="cooks" @remove="removecook" v-if="!isLoading"></cook-list>
+      <div v-else>Идет загрузка</div>
     </div>
+  </div>
+      
   </template>
   
   <script>
   import AppHeader from "@/components/AppHeader.vue";
   import CookForm from "@/components/CookForm.vue";
   import CookList from "@/components/CookList.vue";
+  import Navbar from "@/components/Navbar.vue"
   import axios from "axios";
   import store from "@/store"
 
   export default{
     components:{
-      AppHeader, CookForm, CookList,
+      AppHeader, CookForm, CookList,Navbar
     },
     name: "CooksPage",
     data(){
       return{
+        isLoading: false,
         cooks:[],
         dialogVisible: false,
         selectedSort: '',
@@ -57,24 +64,15 @@
             birth_year: cook.birthYear,
             salary: +cook.salary
           }
-          const headers ={'Authorization': `Token ${token}`}
           console.log(content)
-          axios.post('http://fofone9.pythonanywhere.com/api/cooks/', content, {headers})
+          this.$ajax.post('cooks/', content)
           .then(response => cook.id = response.data.id)
           this.cooks.push(cook)
           console.log(content)
         
       },
       removecook(cook){
-        const token = store.state.login.token
-        axios.delete(
-        `http://fofone9.pythonanywhere.com/api/cooks/${cook.id}/`,
-        {
-          headers: {
-            "Authorization": `Token ${token}`,
-          },
-        }
-        )     
+        this.$ajax.delete(`cooks/${cook.id}/`)     
         this.cooks = this.cooks.filter(d => d.id !== cook.id)
       },
       showDialog(){
@@ -82,14 +80,13 @@
       },
       async fetchCooks(){
         try{
-          const response = await axios.get('http://fofone9.pythonanywhere.com/api/cooks/', {
-            headers: {
-              'Authorization': 'Token ae455d78319cf6819dbaa62c5bbbddd2b180fa37'
-            }
-          })
+          this.isLoading = true
+          const response = await this.$ajax.get('cooks/')
           this.cooks = response.data
         }catch(e){
           alert('Ошибка')
+        }finally{
+          this.isLoading = false
         }
       }
     },
@@ -99,6 +96,9 @@
           return cook1[newValue].localeCompare(cook2[newValue])
         })
       }
+    },
+    mounted(){
+      this.fetchCooks();
     }
   }
   </script>

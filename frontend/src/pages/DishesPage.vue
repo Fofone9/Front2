@@ -1,7 +1,9 @@
 <template>
+  <div>
+    <Navbar></Navbar>
     <div class="main-block">
       <app-header></app-header>
-      <pavlov-btn @click="fetchDishes">получить блюда</pavlov-btn>
+      <pavlov-btn @click="fetchDishes">Обновить</pavlov-btn>
       <div class="app-btns">
         <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
         <pavlov-btn @click="showDialog" class="add-btn">Добавить блюдо</pavlov-btn>
@@ -11,24 +13,28 @@
         <dish-form @create="createDish"></dish-form>
       </pavlov-dialog>
       
-      <dish-list :dishes="dishes" @remove="removeDish"></dish-list>
+      <dish-list :dishes="dishes" @remove="removeDish" v-if="!isLoading"></dish-list>
+      <div v-else>Идет загрузка</div>
     </div>
+  </div>
   </template>
   
   <script>
   import AppHeader from "@/components/AppHeader.vue";
   import DishForm from "@/components/DishForm.vue";
   import DishList from "@/components/DishList.vue";
+  import Navbar from "@/components/Navbar.vue"
   import axios from "axios";
   import store from "@/store"
 
   export default{
     components:{
-      AppHeader, DishForm, DishList,
+      AppHeader, DishForm, DishList,Navbar
     },
     name: "DishesPage",
     data(){
       return{
+        isLoading: false,
         dishes:[],
         dialogVisible: false,
         selectedSort: '',
@@ -53,22 +59,12 @@
             author: 1,
             ingredients: []
           }
-          const headers ={'Authorization': `Token ${token}`}
-          console.log(content)
-          axios.post('http://fofone9.pythonanywhere.com/api/dishes/', content, {headers})
+          this.$ajax.post('dishes/', content)
           .then(response => dish.id = response.data.id)
           this.dishes.push(dish)
       },
       removeDish(dish){
-        const token = store.state.login.token
-        axios.delete(
-        `http://fofone9.pythonanywhere.com/api/dishes/${dish.id}/`,
-        {
-          headers: {
-            "Authorization": `Token ${token}`,
-          },
-        }
-        )     
+        this.$ajax.delete(`dishes/${dish.id}/`)
         this.dishes = this.dishes.filter(d => d.id !== dish.id)
       },
       showDialog(){
@@ -76,14 +72,13 @@
       },
       async fetchDishes(){
         try{
-          const response = await axios.get('http://fofone9.pythonanywhere.com/api/dishes/', {
-            headers: {
-              'Authorization': 'Token ae455d78319cf6819dbaa62c5bbbddd2b180fa37'
-            }
-          })
+          this.isLoading = true
+          const response = await this.$ajax.get('dishes/')
           this.dishes = response.data
         }catch(e){
           alert('Ошибка')
+        }finally{
+          this.isLoading = false
         }
       }
     },
@@ -93,6 +88,9 @@
           return dish1[newValue].localeCompare(dish2[newValue])
         })
       }
+    },
+    mounted(){
+      this.fetchDishes();
     }
   }
   </script>

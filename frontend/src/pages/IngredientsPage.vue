@@ -1,7 +1,9 @@
 <template>
+  <div>
+    <Navbar></Navbar>
     <div class="main-block">
       <app-header></app-header>
-      <pavlov-btn @click="fetchIngredients">получить ингредиенты</pavlov-btn>
+      <pavlov-btn @click="fetchIngredients">Обновить</pavlov-btn>
       <div class="app-btns">
         <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
         <pavlov-btn @click="showDialog" class="add-btn">Добавить ингредиент</pavlov-btn>
@@ -11,30 +13,35 @@
         <ingredient-form @create="createingredient"></ingredient-form>
       </pavlov-dialog>
       
-      <ingredient-list :ingredients="ingredients" @remove="removeingredient"></ingredient-list>
+      <ingredient-list :ingredients="ingredients" @remove="removeingredient" v-if="!isLoading"></ingredient-list>
+      <div v-else>Идет загрузка</div>
     </div>
+  </div>
+      
   </template>
   
   <script>
   import AppHeader from "@/components/AppHeader.vue";
   import IngredientForm from "@/components/IngredientForm.vue";
   import IngredientList from "@/components/IngredientList.vue";
+  import Navbar from "@/components/Navbar.vue"
   import axios from "axios";
   import store from "@/store"
   export default{
     components:{
-      AppHeader, IngredientForm, IngredientList,
+      AppHeader, IngredientForm, IngredientList,Navbar
     },
     name: "IngredientsPage",
     data(){
       return{
+        isLoading: false,
         ingredients:[],
         dialogVisible: false,
         selectedSort: '',
         sortOptions: [
           {value: 'name', name: "По названию"},
-          {value: 'price', name: "По цене"},
-          {value: 'calories', name: "По калорийности"},
+          {value: 'cost', name: "По цене"},
+          {value: 'calorie_content', name: "По калорийности"},
         ]
       }
     },
@@ -61,22 +68,13 @@
             calorie_content: +ingredient.calorie_content,
             cost: +ingredient.cost
           }
-          const headers ={'Authorization': `Token ${token}`}
           console.log(content)
-          axios.post('http://fofone9.pythonanywhere.com/api/ingredients/', content, {headers})
+          this.$ajax.post('ingredients/', content)
           .then(response => ingredient.id = response.data.id)
         this.ingredients.push(ingredient)
       },
       removeingredient(ingredient){
-        const token = store.state.login.token
-        axios.delete(
-        `http://fofone9.pythonanywhere.com/api/ingredients/${ingredient.id}/`,
-        {
-          headers: {
-            "Authorization": `Token ${token}`,
-          },
-        }
-        )     
+        this.$ajax.delete(`ingredients/${ingredient.id}/`)     
         this.ingredients = this.ingredients.filter(d => d.id !== ingredient.id)
       },
       showDialog(){
@@ -84,23 +82,34 @@
       },
       async fetchIngredients(){
         try{
-          const response = await axios.get('http://fofone9.pythonanywhere.com/api/ingredients/', {
-            headers: {
-              'Authorization': 'Token ae455d78319cf6819dbaa62c5bbbddd2b180fa37'
-            }
-          })
+          this.isLoading = true
+          const response = await this.$ajax.get('ingredients/')
           this.ingredients = response.data
         }catch(e){
           alert('Ошибка')
+        }finally{
+          this.isLoading = false
         }
       }
     },
     watch: {
       selectedSort(newValue){
-        this.ingredients.sort((ingredient1, ingredient2)=>{
+        if(newValue == 'name'){
+          this.ingredients.sort((ingredient1, ingredient2)=>{
           return ingredient1[newValue].localeCompare(ingredient2[newValue])
         })
+        }
+        else{          
+          this.ingredients.sort((ingredient1, ingredient2)=>{
+            console.log((ingredient1[newValue] > ingredient2[newValue]))
+          return (ingredient1[newValue] > ingredient2[newValue])
+        })
+        }
+        
       }
+    },
+    mounted(){
+      this.fetchIngredients();
     }
   }
   </script>
