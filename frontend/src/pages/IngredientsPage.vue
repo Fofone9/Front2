@@ -101,8 +101,7 @@
         }
         else{          
           this.ingredients.sort((ingredient1, ingredient2)=>{
-            console.log((ingredient1[newValue] > ingredient2[newValue]))
-          return (ingredient1[newValue] > ingredient2[newValue])
+          return (ingredient1[newValue] > ingredient2[newValue])*3 -2
         })
         }
         

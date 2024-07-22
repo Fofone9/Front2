@@ -39,8 +39,8 @@
         dialogVisible: false,
         selectedSort: '',
         sortOptions: [
-          {value: 'dishName', name: "По названию блюда"},
-          {value: 'dishName', name: "По имени повара"}
+          {value: 'name', name: "По названию блюда"},
+          {value: 'dish_type', name: "По типу"}
         ]
       }
     },
