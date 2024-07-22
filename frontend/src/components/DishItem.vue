@@ -3,9 +3,7 @@
         <td>{{ dish.name }}</td>
         <td>
             <div class="dish-description">
-                <ul >
-                    <li>Тип: {{ dish.dish_type.toUpperCase() }}</li>
-                </ul>
+                    <div>Тип: {{ dish.dish_type.toUpperCase() }}</div>
 
                 <div class="dish-btns">
                     <pavlov-btn @click="$emit('remove', dish)" class="del-btn">Удалить</pavlov-btn>
@@ -34,7 +32,7 @@ td {
 	border: none;
 	padding: 10px 15px;
     padding-right: 0;
-	vertical-align: top;
+	vertical-align: centre;
 }
 .dish-description{
     display: flex;
