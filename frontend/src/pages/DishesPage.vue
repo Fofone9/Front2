@@ -49,7 +49,9 @@
             }
           const content ={
             name: dish.name,
-            dish_type: dish.dish_type
+            dish_type: dish.dish_type,
+            author: 1,
+            ingredients: []
           }
           const headers ={'Authorization': `Token ${token}`}
           console.log(content)

@@ -6,11 +6,7 @@
        type="text"
        placeholder="Название"
       ></pavlov-input>
-      <pavlov-input
-       v-model="dish.dish_type" 
-       type="text" 
-       placeholder="Тип блюда"
-      ></pavlov-input>
+      <pavlov-select v-model="dish.dish_type" :options="types"></pavlov-select>
       <pavlov-btn @click="createDish" style="align-self: flex-end;" class="form-btn">Добавить</pavlov-btn>
     </form>
 </template>
@@ -22,7 +18,18 @@
                 dish: {
                     name:'',
                     dish_type:'',
-                }
+                },
+                types:[
+                {value:'Bakery', name: 'Выпечка'},
+                {value:'Breakfast', name: 'Завтрак'},
+                {value:'Dessert', name: 'Десерт'},
+                {value:'On coals', name: 'На углях'},
+                {value:'Beverages', name: 'Напитки'},
+                {value:'Soups', name: 'Супы'},
+                {value:'Cold snacks',name: 'Холодные закуски'},
+                {value:'Hot dishes', name: 'Горячие блюда'},
+                {value:'Side dishes', name: 'Гарниры'},
+                ]
             }
         },
         methods:{
