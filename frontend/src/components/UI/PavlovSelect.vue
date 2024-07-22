@@ -28,6 +28,12 @@
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+select{
+    margin-top: 15px;
+    padding: 10px 15px;
+    background: none;
+    color: teal;
+    border: 1px solid teal;
+}
 </style>
