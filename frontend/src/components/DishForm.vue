@@ -1,14 +1,16 @@
 <template>
     <form @submit.prevent>
-      <h3>Добавить блюдо</h3>
-      <pavlov-input
-       v-model="dish.name"
-       type="text"
-       placeholder="Название"
-      ></pavlov-input>
-      <pavlov-select v-model="dish.dish_type" :options="types"></pavlov-select>
-      <pavlov-select v-model="dish.cook" :options="cooks"></pavlov-select>
-      <pavlov-btn @click="createDish" style="align-self: flex-end;" class="form-btn">Добавить</pavlov-btn>
+        <h3>Добавить блюдо</h3>
+        <pavlov-input
+            v-focus
+            v-model="dish.name"
+            type="text"
+            placeholder="Название"
+        >
+        </pavlov-input>
+        <pavlov-select v-model="dish.dish_type" :options="types"></pavlov-select>
+        <pavlov-select v-model="dish.cook" :options="cooks"></pavlov-select>
+        <pavlov-btn @click="createDish" style="align-self: flex-end;" class="form-btn">Добавить</pavlov-btn>
     </form>
 </template>
 
@@ -47,10 +49,10 @@
             },
             async fetchCooks(){
                 const response = await this.$ajax.get('cooks/')
-           let array = response.data
-           array.forEach(element => {
+                let array = response.data
+                array.forEach(element => {
                 this.cooks.push({value:element.id, name: `${element.surname} ${element.name}`})
-           });
+                });
             }
         },
         created(){

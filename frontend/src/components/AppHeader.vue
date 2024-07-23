@@ -1,7 +1,7 @@
 <template>
   <div class="x-header">
     <strong class="header-text">Павлов Александр</strong>
-    <button class="btn" @click="logOut" :class="{active: isActive}">Выход</button>
+    <pavlov-btn @click="logOut" :class="{active: isActive}">Выход</pavlov-btn>
   </div>
 </template>
 
@@ -28,19 +28,15 @@ export default {
 .x-header {
   width: 100%;
   border: 2px solid teal;
-  padding: 10px 15px;
+  padding:0 15px 10px 15px;
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
 }
-
-.btn{
-  align-self: flex-end;
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
+.header-text{
+  margin-top: 15px;
+  
 }
 </style>

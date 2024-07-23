@@ -70,6 +70,7 @@
         this.dialogVisible = true
       },
       async fetchDishes(){
+        
         try{
           this.isLoading = true
           const response = await this.$ajax.get('dishes/')

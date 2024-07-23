@@ -3,11 +3,12 @@
       <h3>Добавить Повара</h3>
       
         <pavlov-input
+            v-focus
             v-model="cook.name"
             type="text"
             placeholder="Имя">
         </pavlov-input>
-            <pavlov-input
+        <pavlov-input
             v-model="cook.surname"
             type="text"
             placeholder="Фамилия">

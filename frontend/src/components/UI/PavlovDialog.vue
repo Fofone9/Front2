@@ -7,19 +7,11 @@
 </template>
 
 <script>
+import toggleMixin from '@/mixins/toggleMixin';
+
     export default {
         name:"pavlov-dialog",
-        props:{
-            value:{
-                type: Boolean,
-                default: false
-            }
-        },
-        methods:{
-            hideDialog(){
-                this.$emit('input', false)
-            }
-        }
+        mixins: [toggleMixin]
     }
 </script>
 
