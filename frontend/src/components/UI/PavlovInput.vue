@@ -23,4 +23,8 @@
   padding: 10px 15px;
   margin-top: 15px;
 }
+.active{
+    color: gray;
+    border: 1px solid gray;
+}
 </style>

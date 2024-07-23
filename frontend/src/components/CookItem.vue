@@ -8,7 +8,7 @@
                 </div>
 
                 <div class="cook-btns">
-                    <pavlov-btn @click="$emit('remove', cook)" class="del-btn">Удалить</pavlov-btn>
+                    <pavlov-btn @click="$emit('remove', cook)" class="del-btn" :class="{active: isActive}">Удалить</pavlov-btn>
                 </div>
             </div>
             
@@ -18,8 +18,12 @@
 
 <script>
     export default {
-        
+       
         props: {
+            isActive:{
+            type: Boolean,
+            required: true
+            },
             cook: {
                 type: Object,
                 required: true,

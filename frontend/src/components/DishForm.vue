@@ -53,7 +53,7 @@
            });
             }
         },
-        beforeMount(){
+        created(){
            this.fetchCooks()
         }
     }

@@ -7,7 +7,7 @@
             </tr>
         </thead>
         <transition-group name="dish-list" tag="tbody">
-            <dish-item v-for="dish in dishes" :dish="dish" :key="dish.id" @remove="$emit('remove', dish)"></dish-item>
+            <dish-item v-for="dish in dishes" :dish="dish" :key="dish.id" @remove="$emit('remove', dish)" :isActive="isActive"></dish-item>
         </transition-group>     
     </table>
     <div v-else>Ни одно блюдо не добавлено</div>
@@ -20,6 +20,9 @@ import DishItem from "@/components/DishItem.vue"
             DishItem,
         },
         props: {
+            isActive:{
+                type: Boolean
+            },
             dishes: {
                 type: Array,
                 required: true,

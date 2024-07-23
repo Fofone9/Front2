@@ -15,8 +15,8 @@
   margin-top: 15px;
   padding: 10px 15px;
   background: none;
-  color: teal;
-  border: 1px solid teal;
+  color: #008080;
+  border: 1px solid #008080;
   margin-right: 15px;
 }
 .add-btn{
@@ -32,5 +32,10 @@
 .form-btn{
     color: #ffd900;
     border: 1px solid #ffd900;
+}
+
+.active{
+    color: gray;
+    border: 1px solid gray;
 }
 </style>

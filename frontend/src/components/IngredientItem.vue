@@ -9,7 +9,7 @@
                 </ul>
 
                 <div class="ingredient-btns">
-                    <pavlov-btn @click="$emit('remove', ingredient)" class="del-btn">Удалить</pavlov-btn>
+                    <pavlov-btn @click="$emit('remove', ingredient)" class="del-btn" :class="{active: isActive}">Удалить</pavlov-btn>
                 </div>
             </div>
             
@@ -21,6 +21,10 @@
     export default {
         
         props: {
+            isActive:{
+                type: Boolean,
+                required: true
+            },
             ingredient: {
                 type: Object,
                 required: true,

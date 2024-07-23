@@ -1,13 +1,19 @@
 <template>
   <div class="x-header">
     <strong class="header-text">Павлов Александр</strong>
-    <button class="btn" @click="logOut">Выход</button>
+    <button class="btn" @click="logOut" :class="{active: isActive}">Выход</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "AppHeader",
+  props:{
+        isActive:{
+            type: Boolean,
+            required: true
+        }
+    },
   methods:{
     logOut(){
       this.$store.commit('login/removeToken')

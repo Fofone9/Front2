@@ -1,19 +1,19 @@
 <template>
   <div>
-    <Navbar></Navbar>
+    <Navbar :isActive="dialogVisible"></Navbar>
     <div class="main-block">
-      <app-header></app-header>
-      <pavlov-input v-model="searchQuery" placeholder="Поиск по названию"></pavlov-input>
-      <pavlov-btn @click="fetchIngredients">Обновить</pavlov-btn>
+      <app-header :isActive="dialogVisible"></app-header>
+      <pavlov-input v-model="searchQuery" placeholder="Поиск по названию" :class="{active: dialogVisible}"></pavlov-input>
+      <pavlov-btn @click="fetchIngredients" :class="{active: dialogVisible}">Обновить</pavlov-btn>
       <div class="app-btns">
-        <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
-        <pavlov-btn @click="showDialog" class="add-btn">Добавить ингредиент</pavlov-btn>
+        <pavlov-select v-model="selectedSort" :options="sortOptions" :class="{active: dialogVisible}"></pavlov-select>
+        <pavlov-btn @click="showDialog" class="add-btn" :class="{active: dialogVisible}">Добавить ингредиент</pavlov-btn>
       </div>
       <pavlov-dialog v-model="dialogVisible">
         <ingredient-form @create="createingredient"></ingredient-form>
       </pavlov-dialog>
       
-      <ingredient-list :ingredients="sortedAndSearchedIngredients" @remove="removeingredient" v-if="!isLoading"></ingredient-list>
+      <ingredient-list :ingredients="sortedAndSearchedIngredients" :isActive="dialogVisible" @remove="removeingredient" v-if="!isLoading"></ingredient-list>
       <div v-else>Идет загрузка</div>
     </div>
   </div>

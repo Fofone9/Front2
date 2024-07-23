@@ -7,7 +7,7 @@
             </tr>
         </thead>
         <transition-group name="ingredient-list" tag="tbody">
-            <ingredient-item v-for="ingredient in ingredients" :ingredient="ingredient" :key="ingredient.id" @remove="$emit('remove', ingredient)"></ingredient-item>
+            <ingredient-item v-for="ingredient in ingredients" :ingredient="ingredient" :isActive="isActive" :key="ingredient.id" @remove="$emit('remove', ingredient)"></ingredient-item>
         </transition-group>     
     </table>
     <div v-else>Нет ингредиентов</div>
@@ -20,6 +20,10 @@ import IngredientItem from "@/components/IngredientItem.vue"
             IngredientItem,
         },
         props: {
+            isActive:{
+                type: Boolean,
+                required: true
+            },
             ingredients: {
                 type: Array,
                 required: true,

@@ -37,4 +37,8 @@ select{
     color: teal;
     border: 1px solid teal;
 }
+.active{
+    color: gray;
+    border: 1px solid gray;
+}
 </style>

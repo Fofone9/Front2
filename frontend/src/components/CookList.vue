@@ -7,7 +7,7 @@
             </tr>
         </thead>
         <transition-group name="cook-list" tag="tbody">
-            <cook-item v-for="cook in cooks" :cook="cook" :key="cook.id" @remove="$emit('remove', cook)"></cook-item>
+            <cook-item v-for="cook in cooks" :cook="cook" :key="cook.id" @remove="$emit('remove', cook)" :isActive="isActive"></cook-item>
         </transition-group>    
     </table>
     <div v-else>Поваров нет</div>
@@ -20,6 +20,10 @@ import CookItem from "@/components/CookItem.vue"
             CookItem,
         },
         props: {
+            isActive:{
+                type: Boolean,
+                required: true
+            },
             cooks: {
                 type: Array,
                 required: true,

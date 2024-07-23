@@ -1,20 +1,20 @@
 <template>
   <div>
-    <Navbar></Navbar>
+    <Navbar :isActive="dialogVisible"></Navbar>
     <div class="main-block">
-      <app-header></app-header>
-      <pavlov-input v-model="searchQuery" placeholder="Поиск по названию"></pavlov-input>
-      <pavlov-btn @click="fetchDishes">Обновить</pavlov-btn>
+      <app-header :isActive="dialogVisible"></app-header>
+      <pavlov-input v-model="searchQuery" placeholder="Поиск по названию" :class="{active: dialogVisible}"></pavlov-input>
+      <pavlov-btn @click="fetchDishes" :class="{active: dialogVisible}">Обновить</pavlov-btn>
       <div class="app-btns">
-        <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
-        <pavlov-btn @click="showDialog" class="add-btn">Добавить блюдо</pavlov-btn>
+        <pavlov-select v-model="selectedSort" :options="sortOptions" :class="{active: dialogVisible}"></pavlov-select>
+        <pavlov-btn @click="showDialog" class="add-btn" :class="{active: dialogVisible}">Добавить блюдо</pavlov-btn>
       </div>
       
       <pavlov-dialog v-model="dialogVisible">
         <dish-form @create="createDish"></dish-form>
       </pavlov-dialog>
       
-      <dish-list :dishes="sortedAndSearchedDishes" @remove="removeDish" v-if="!isLoading"></dish-list>
+      <dish-list :dishes="sortedAndSearchedDishes" @remove="removeDish" v-if="!isLoading" :isActive="dialogVisible"></dish-list>
       <div v-else>Идет загрузка</div>
     </div>
   </div>
