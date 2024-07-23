@@ -5,6 +5,7 @@ import router from "@/router/index"
 import store from "@/store"
 import axios from "@/plugins/axios"
 import directives from '@/directives'
+import vuetify from './plugins/vuetify'
 Vue.config.productionTip = false
 Vue.use(axios)
 
@@ -18,5 +19,6 @@ directives.forEach(directive => {
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')
