@@ -18,7 +18,7 @@
             placeholder="Зарплата">
         </pavlov-input>
         <pavlov-input
-            v-model="cook.birthYear"
+            v-model="cook.birth_year"
             type="date"
             placeholder="Зарплата">
         </pavlov-input>
@@ -34,19 +34,18 @@
                     name:'',
                     surname:'',
                     salary:'',
-                    birthYear:''
+                    birth_year:''
                 }
             }
         },
         methods:{
             createCook(){
-                console.log(1)
                 this.$emit('create', this.cook)
                 this.cook = {
                     name:'',
                     surname:'',
                     salary:'',
-                    birthYear:''
+                    birth_year:''
                 }
             }
         }

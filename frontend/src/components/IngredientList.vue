@@ -6,9 +6,9 @@
                 <th>Описание</th>
             </tr>
         </thead>
-        <tbody>
+        <transition-group name="ingredient-list" tag="tbody">
             <ingredient-item v-for="ingredient in ingredients" :ingredient="ingredient" :key="ingredient.id" @remove="$emit('remove', ingredient)"></ingredient-item>
-        </tbody>     
+        </transition-group>     
     </table>
     <div v-else>Нет ингредиентов</div>
 </template>
@@ -52,4 +52,19 @@ th:last-child {
 	border-radius: 0 8px 8px 0;
 }
 
+.ingredient-list-move,
+.ingredient-list-enter-active,
+.ingredient-list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.ingredient-list-enter-from,
+.ingredient-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.ingredient-list-leave-active {
+  position: absolute;
+}
 </style>

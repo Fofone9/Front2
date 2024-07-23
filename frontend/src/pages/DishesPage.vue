@@ -24,8 +24,7 @@
   import DishForm from "@/components/DishForm.vue";
   import DishList from "@/components/DishList.vue";
   import Navbar from "@/components/Navbar.vue"
-  import axios from "axios";
-  import store from "@/store"
+
 
   export default{
     components:{
@@ -46,9 +45,8 @@
     },
     methods:{
       createDish(dish){
-        const token = store.state.login.token
           
-          if (dish.name == '' || dish.dish_type == '')
+          if (dish.name == '' || dish.dish_type == '' || dish.cook == '')
             {
               alert("Введите все данные")
               return
@@ -56,7 +54,7 @@
           const content ={
             name: dish.name,
             dish_type: dish.dish_type,
-            author: 1,
+            author: dish.cook,
             ingredients: []
           }
           this.$ajax.post('dishes/', content)

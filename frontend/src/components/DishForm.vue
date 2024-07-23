@@ -7,6 +7,7 @@
        placeholder="Название"
       ></pavlov-input>
       <pavlov-select v-model="dish.dish_type" :options="types"></pavlov-select>
+      <pavlov-select v-model="dish.cook" :options="cooks"></pavlov-select>
       <pavlov-btn @click="createDish" style="align-self: flex-end;" class="form-btn">Добавить</pavlov-btn>
     </form>
 </template>
@@ -18,6 +19,7 @@
                 dish: {
                     name:'',
                     dish_type:'',
+                    cook:'',
                 },
                 types:[
                 {value:'Bakery', name: 'Выпечка'},
@@ -29,7 +31,8 @@
                 {value:'Cold snacks',name: 'Холодные закуски'},
                 {value:'Hot dishes', name: 'Горячие блюда'},
                 {value:'Side dishes', name: 'Гарниры'},
-                ]
+                ],
+                cooks:[],
             }
         },
         methods:{
@@ -39,8 +42,19 @@
                 this.dish = {
                     name:'',
                     dish_type:'',
+                    cook: '',
                 }
+            },
+            async fetchCooks(){
+                const response = await this.$ajax.get('cooks/')
+           let array = response.data
+           array.forEach(element => {
+                this.cooks.push({value:element.id, name: `${element.surname} ${element.name}`})
+           });
             }
+        },
+        beforeMount(){
+           this.fetchCooks()
         }
     }
 </script>

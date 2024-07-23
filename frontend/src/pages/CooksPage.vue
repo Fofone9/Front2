@@ -25,8 +25,6 @@
   import CookForm from "@/components/CookForm.vue";
   import CookList from "@/components/CookList.vue";
   import Navbar from "@/components/Navbar.vue"
-  import axios from "axios";
-  import store from "@/store"
 
   export default{
     components:{
@@ -47,13 +45,12 @@
     },
     methods:{
       createcook(cook){
-          const token = store.state.login.token
           if (isNaN(+cook.salary))
             {
               alert("Введите коррекную зарплату")
               return
             }
-          if (cook.name == '' || cook.surname == '' || cook.birthYear == '')
+          if (cook.name == '' || cook.surname == '' || cook.birth_year == '')
             {
               alert("Введите все данные")
               return
@@ -61,14 +58,12 @@
           const content ={
             name: cook.name,
             surname: cook.surname,
-            birth_year: cook.birthYear,
+            birth_year: cook.birth_year,
             salary: +cook.salary
           }
-          console.log(content)
           this.$ajax.post('cooks/', content)
           .then(response => cook.id = response.data.id)
           this.cooks.push(cook)
-          console.log(content)
         
       },
       removecook(cook){

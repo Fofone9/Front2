@@ -6,9 +6,9 @@
                 <th>Зарплата</th>
             </tr>
         </thead>
-        <tbody>
+        <transition-group name="cook-list" tag="tbody">
             <cook-item v-for="cook in cooks" :cook="cook" :key="cook.id" @remove="$emit('remove', cook)"></cook-item>
-        </tbody>     
+        </transition-group>    
     </table>
     <div v-else>Поваров нет</div>
 </template>
@@ -52,4 +52,20 @@ th:last-child {
 	border-radius: 0 8px 8px 0;
 }
 
+
+.cook-list-move,
+.cook-list-enter-active,
+.cook-list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.cook-list-enter-from,
+.cook-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.cook-list-leave-active {
+  position: absolute;
+}
 </style>

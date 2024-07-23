@@ -6,9 +6,9 @@
                 <th>Описание</th>
             </tr>
         </thead>
-        <tbody>
+        <transition-group name="dish-list" tag="tbody">
             <dish-item v-for="dish in dishes" :dish="dish" :key="dish.id" @remove="$emit('remove', dish)"></dish-item>
-        </tbody>     
+        </transition-group>     
     </table>
     <div v-else>Ни одно блюдо не добавлено</div>
 </template>
@@ -52,4 +52,19 @@ th:last-child {
 	border-radius: 0 8px 8px 0;
 }
 
+.dish-list-move,
+.dish-list-enter-active,
+.dish-list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.dish-list-enter-from,
+.dish-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.dish-list-leave-active {
+  position: absolute;
+}
 </style>
