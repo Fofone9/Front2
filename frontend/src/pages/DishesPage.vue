@@ -3,6 +3,7 @@
     <Navbar></Navbar>
     <div class="main-block">
       <app-header></app-header>
+      <pavlov-input v-model="searchQuery" placeholder="Поиск по названию"></pavlov-input>
       <pavlov-btn @click="fetchDishes">Обновить</pavlov-btn>
       <div class="app-btns">
         <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
@@ -13,7 +14,7 @@
         <dish-form @create="createDish"></dish-form>
       </pavlov-dialog>
       
-      <dish-list :dishes="dishes" @remove="removeDish" v-if="!isLoading"></dish-list>
+      <dish-list :dishes="sortedAndSearchedDishes" @remove="removeDish" v-if="!isLoading"></dish-list>
       <div v-else>Идет загрузка</div>
     </div>
   </div>
@@ -37,6 +38,7 @@
         dishes:[],
         dialogVisible: false,
         selectedSort: '',
+        searchQuery: '',
         sortOptions: [
           {value: 'name', name: "По названию блюда"},
           {value: 'dish_type', name: "По типу"}
@@ -84,6 +86,11 @@
         this.dishes.sort((dish1, dish2)=>{
           return dish1[newValue].localeCompare(dish2[newValue])
         })
+      }
+    },
+    computed:{
+      sortedAndSearchedDishes(){
+        return this.dishes.filter(dish => dish.name.includes(this.searchQuery))
       }
     },
     mounted(){

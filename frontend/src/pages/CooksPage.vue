@@ -3,6 +3,7 @@
     <Navbar></Navbar>
     <div class="main-block">
       <app-header></app-header>
+      <pavlov-input v-model="searchQuery" placeholder="Поиск по фамилии"></pavlov-input>
       <pavlov-btn @click="fetchCooks">Обновить</pavlov-btn>
       <div class="app-btns">
         <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
@@ -13,7 +14,7 @@
         <cook-form @create="createcook"></cook-form>
       </pavlov-dialog>
       
-      <cook-list :cooks="cooks" @remove="removecook" v-if="!isLoading"></cook-list>
+      <cook-list :cooks="sortedAndSearchedCooks" @remove="removecook" v-if="!isLoading"></cook-list>
       <div v-else>Идет загрузка</div>
     </div>
   </div>
@@ -36,6 +37,7 @@
         isLoading: false,
         cooks:[],
         dialogVisible: false,
+        searchQuery: '',
         selectedSort: '',
         sortOptions: [
           {value: 'surname', name: "По фамилии"},
@@ -90,6 +92,11 @@
         this.cooks.sort((cook1, cook2)=>{
           return cook1[newValue].localeCompare(cook2[newValue])
         })
+      }
+    },
+    computed:{
+      sortedAndSearchedCooks(){
+        return this.cooks.filter(cook => cook.surname.includes(this.searchQuery))
       }
     },
     mounted(){

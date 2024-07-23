@@ -3,17 +3,17 @@
     <Navbar></Navbar>
     <div class="main-block">
       <app-header></app-header>
+      <pavlov-input v-model="searchQuery" placeholder="Поиск по названию"></pavlov-input>
       <pavlov-btn @click="fetchIngredients">Обновить</pavlov-btn>
       <div class="app-btns">
         <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
         <pavlov-btn @click="showDialog" class="add-btn">Добавить ингредиент</pavlov-btn>
       </div>
-      
       <pavlov-dialog v-model="dialogVisible">
         <ingredient-form @create="createingredient"></ingredient-form>
       </pavlov-dialog>
       
-      <ingredient-list :ingredients="ingredients" @remove="removeingredient" v-if="!isLoading"></ingredient-list>
+      <ingredient-list :ingredients="sortedAndSearchedIngredients" @remove="removeingredient" v-if="!isLoading"></ingredient-list>
       <div v-else>Идет загрузка</div>
     </div>
   </div>
@@ -25,8 +25,6 @@
   import IngredientForm from "@/components/IngredientForm.vue";
   import IngredientList from "@/components/IngredientList.vue";
   import Navbar from "@/components/Navbar.vue"
-  import axios from "axios";
-  import store from "@/store"
   export default{
     components:{
       AppHeader, IngredientForm, IngredientList,Navbar
@@ -37,6 +35,7 @@
         isLoading: false,
         ingredients:[],
         dialogVisible: false,
+        searchQuery: '',
         selectedSort: '',
         sortOptions: [
           {value: 'name', name: "По названию"},
@@ -47,7 +46,6 @@
     },
     methods:{
       createingredient(ingredient){
-        const token = store.state.login.token
           if (isNaN(+ingredient.cost))
             {
               alert("Введите коррекную цену")
@@ -105,6 +103,11 @@
         })
         }
         
+      }
+    },
+    computed:{
+      sortedAndSearchedIngredients(){
+        return this.ingredients.filter(ingredient => ingredient.name.includes(this.searchQuery))
       }
     },
     mounted(){
