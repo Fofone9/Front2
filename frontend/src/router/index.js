@@ -6,6 +6,7 @@ import IngredientsPage from "@/pages/IngredientsPage.vue"
 import CooksPage from "@/pages/CooksPage.vue"
 import LoginPage from "@/pages/LoginPage.vue"
 import store from "@/store"
+import TestPage from '@/pages/TestPage.vue'
 
 Vue.use(VueRouter)
 
@@ -42,7 +43,13 @@ const routes = [
     name: 'login',
     component: LoginPage,
     meta: {requiresAuth: false}
-  }
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: TestPage,
+    meta: {requiresAuth: false}
+  },
 ]
 
 const router = new VueRouter({
