@@ -1,5 +1,5 @@
 <template>
-    <select v-model="value" @change="changeOption">
+    <select :value="value" @change="changeOption">
         <option disabled value="">Выберите из списка</option>
         <option v-for="option in options" :key="option.value" :value="option.value">
             {{ option.name }}
@@ -10,6 +10,7 @@
 <script>
     export default {
         name: "pavlov-select",
+        
         props: {
             value:{
                 type: String

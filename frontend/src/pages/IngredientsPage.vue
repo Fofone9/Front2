@@ -70,8 +70,8 @@
           }
           console.log(content)
           this.$ajax.post('ingredients/', content)
-          .then(response => ingredient.id = response.data.id)
-        this.ingredients.push(ingredient)
+          .then(response => this.ingredients.push({...ingredient, id: response.data.id}))
+        
       },
       removeingredient(ingredient){
         this.$ajax.delete(`ingredients/${ingredient.id}/`)     

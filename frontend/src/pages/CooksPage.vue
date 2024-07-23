@@ -6,7 +6,7 @@
       <pavlov-btn @click="fetchCooks">Обновить</pavlov-btn>
       <div class="app-btns">
         <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
-        <pavlov-btn @click="showDialog" class="add-btn">Добавить повара</pavlov-btn>
+        <pavlov-btn @click="showDialog" >Добавить повара</pavlov-btn>
       </div>
       
       <pavlov-dialog v-model="dialogVisible">
@@ -62,8 +62,8 @@
             salary: +cook.salary
           }
           this.$ajax.post('cooks/', content)
-          .then(response => cook.id = response.data.id)
-          this.cooks.push(cook)
+          .then(response => this.cooks.push({...cook, id: response.data.id}))
+          
         
       },
       removecook(cook){

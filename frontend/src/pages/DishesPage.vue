@@ -58,8 +58,7 @@
             ingredients: []
           }
           this.$ajax.post('dishes/', content)
-          .then(response => dish.id = response.data.id)
-          this.dishes.push(dish)
+          .then(response => this.dishes.push({...dish, id:response.data.id}))
       },
       removeDish(dish){
         this.$ajax.delete(`dishes/${dish.id}/`)
