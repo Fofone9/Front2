@@ -141,7 +141,58 @@
                     </v-btn>
                 </v-card>
             </v-dialog>
-            <dish-list :dishes="sortedAndSearchedDishes" @remove="removeDish" v-if="!isLoading" :isActive="dialogVisible"></dish-list>
+            <v-card v-if="!isLoading"
+            class="pa-4">
+                <v-data-iterator
+                    :items="sortedAndSearchedDishes"
+                    :items-per-page.sync="itemsPerPage"
+                    >
+                    <template v-slot:default="props">
+                        <v-row>
+                        <v-col
+                            v-for="item in props.items"
+                            :key="item.id"
+                            cols="12"
+                            sm="6"
+                            md="4"
+                            lg="3"
+                        >
+                            <v-card>
+                            <v-card-title class="subheading font-weight-bold">
+                                {{ item.name }}
+                            </v-card-title>
+
+                            <v-divider></v-divider>
+
+                            <v-list dense>
+                                <v-list-item>
+                                    <v-list-item-content>Тип блюда:</v-list-item-content>
+                                    <v-list-item-content class="align-end">
+                                        {{ item.dish_type }}
+                                    </v-list-item-content>
+                                </v-list-item>
+
+                                <v-list-item>
+                                    <v-list-item-content class="align-end">
+                                        <v-btn
+                                            outlined
+                                            tile
+                                            color="red"
+                                            over
+                                            class="ml-auto mt-4 py-1"
+                                            @click="removeDish(item)">
+                                                Удалить
+                                        </v-btn>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list>
+                            </v-card>
+                        </v-col>
+                        </v-row>
+                    </template>
+
+                    </v-data-iterator>
+            </v-card>
             <div v-else>Идет загрузка</div>
         </v-card>
         
@@ -158,6 +209,7 @@ import DishList from '@/components/DishList.vue';
         },
         data(){
             return{
+                itemsPerPage: 4,
                 isLoading: false,
                 dishes:[],
                 dialogVisible: false,
