@@ -109,6 +109,7 @@
             >
                 <v-card
                     class="pa-4">
+                    <h3 style="color:#008080">Добавить блюдо</h3>
                     <v-text-field
                         label="Название"
                         v-model="dish.name"
@@ -309,7 +310,7 @@ import DishList from '@/components/DishList.vue';
                 array.forEach(element => {
                     this.ingredients.push({value:element.id, text: `${element.name}`})
                 });
-            }
+            },
         },
         watch: {
             selectedSort(newValue){
@@ -322,11 +323,15 @@ import DishList from '@/components/DishList.vue';
             sortedAndSearchedDishes(){
                 return this.dishes.filter(dish => dish.name.includes(this.searchQuery))
             }
+            
         },
         mounted(){
+            this.isLoading = true
             this.fetchDishes();
             this.fetchCooks();
             this.fetchIngredients();
+            this.isLoading = false
+
         }
                 
     }
