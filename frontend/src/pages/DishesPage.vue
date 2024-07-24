@@ -84,7 +84,14 @@
                 class="mx-auto d-flex justify-space-between align-center"
                 elevation="0"
                 >
-                    <pavlov-select v-model="selectedSort" :options="sortOptions"></pavlov-select>
+                    <v-select
+                        width="40%"
+                        class="mt-10 mr-10"
+                        v-model="selectedSort"
+                        :items="sortOptions"
+                        label="Сортировать"
+                        solo
+                    ></v-select>
                     <v-btn
                         outlined
                         tile
@@ -101,8 +108,37 @@
                 v-model="dialogVisible"
             >
                 <v-card
-                class="pa-4">
-                    <dish-form @create="createDish"></dish-form>
+                    class="pa-4">
+                    <v-text-field
+                        label="Название"
+                        v-model="dish.name"
+                        hide-details="auto"
+                    ></v-text-field>
+                    <v-select
+                        width="40%"
+                        class="mt-4 "
+                        v-model="dish.dish_type"
+                        :items="types"
+                        label="Тип блюда"
+                        solo
+                    ></v-select>
+                    <v-select
+                        width="40%"
+                        class="mt-4 "
+                        v-model="dish.cook"
+                        :items="cooks"
+                        label="Повар"
+                        solo
+                    ></v-select>
+                    <v-btn
+                        outlined
+                        tile
+                        color="blue"
+                        over
+                        class="ml-auto mt-4 py-1"
+                        @click="createDish">
+                            Добавить
+                    </v-btn>
                 </v-card>
             </v-dialog>
             <dish-list :dishes="sortedAndSearchedDishes" @remove="removeDish" v-if="!isLoading" :isActive="dialogVisible"></dish-list>
@@ -116,6 +152,7 @@
 import DishForm from '@/components/DishForm.vue';
 import DishList from '@/components/DishList.vue';
     export default {
+        name: "DishPage",
         components:{
             DishForm, DishList
         },
@@ -126,9 +163,26 @@ import DishList from '@/components/DishList.vue';
                 dialogVisible: false,
                 selectedSort: '',
                 searchQuery: '',
+                dish: {
+                    name:'',
+                    dish_type:'',
+                    cook:'',
+                },
+                cooks:[],
+                types:[
+                {value:'Bakery', text: 'Выпечка'},
+                {value:'Breakfast', text: 'Завтрак'},
+                {value:'Dessert', text: 'Десерт'},
+                {value:'On coals', text: 'На углях'},
+                {value:'Beverages', text: 'Напитки'},
+                {value:'Soups', text: 'Супы'},
+                {value:'Cold snacks',text: 'Холодные закуски'},
+                {value:'Hot dishes', text: 'Горячие блюда'},
+                {value:'Side dishes', text: 'Гарниры'},
+                ],
                 sortOptions: [
-                {value: 'name', name: "По названию блюда"},
-                {value: 'dish_type', name: "По типу"}
+                    {value: 'name', text: "По названию блюда"},
+                    {value: 'dish_type', text: "По типу"}
                 ]
             }
         },
@@ -137,8 +191,8 @@ import DishList from '@/components/DishList.vue';
                 this.$store.commit('login/removeToken')
                 this.$router.push('/login')
             },
-            createDish(dish){
-          
+            createDish(){
+                let dish = {...this.dish}
                 if (dish.name == '' || dish.dish_type == '' || dish.cook == '')
                     {
                     alert("Введите все данные")
@@ -152,6 +206,9 @@ import DishList from '@/components/DishList.vue';
                 }
                 this.$ajax.post('dishes/', content)
                 .then(response => this.dishes.push({...dish, id:response.data.id}))
+                this.dish.name = ''
+                this.dish.cook = ''
+                this.dish.dish_type = ''
             },
             removeDish(dish){
                 this.$ajax.delete(`dishes/${dish.id}/`)
@@ -161,16 +218,23 @@ import DishList from '@/components/DishList.vue';
                 this.dialogVisible = true
             },
             async fetchDishes(){
-                
                 try{
-                this.isLoading = true
-                const response = await this.$ajax.get('dishes/')
-                this.dishes = response.data
+                    this.isLoading = true
+                    const response = await this.$ajax.get('dishes/')
+                    this.dishes = response.data
                 }catch(e){
-                alert('Ошибка')
+                    alert('Ошибка')
                 }finally{
-                this.isLoading = false
+                    this.isLoading = false
                 }
+            },
+            async fetchCooks(){
+                
+                const response = await this.$ajax.get('cooks/')
+                let array = response.data
+                array.forEach(element => {
+                    this.cooks.push({value:element.id, text: `${element.surname} ${element.name}`})
+                });
             }
         },
         watch: {
@@ -187,6 +251,7 @@ import DishList from '@/components/DishList.vue';
         },
         mounted(){
             this.fetchDishes();
+            this.fetchCooks();
         }
                 
     }
