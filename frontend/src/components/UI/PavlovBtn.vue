@@ -1,6 +1,6 @@
 <template>
-    <button class="btn" @click="$emit('click')">
-        <slot></slot>
+    <button class="btn" @click="$emit('click')" style="">
+        <slot ></slot>
     </button>
 </template>
 
@@ -13,15 +13,18 @@
 <style scoped>
 .btn{
   margin-top: 15px;
-  padding: 10px 15px;
+  padding: 2px 15px;
   background: none;
   color: #008080;
   border: 1px solid #008080;
   margin-right: 15px;
+  font-weight: 500; 
+  letter-spacing: 0.0892857143em; 
+  text-transform: uppercase;
 }
 .add-btn{
-    color: blue;
-    border: 1px solid blue;
+    color: #2196F3;
+    border: 1px solid #2196F3;
 }
 
 .del-btn{

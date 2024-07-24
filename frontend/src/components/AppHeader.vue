@@ -1,7 +1,7 @@
 <template>
   <div class="x-header">
-    <strong class="header-text">Павлов Александр</strong>
-    <pavlov-btn @click="logOut" :class="{active: isActive}">Выход</pavlov-btn>
+    <strong class="header-text" >Павлов Александр</strong>
+    <pavlov-btn @click="logOut" :class="{active: isActive}" >Выход</pavlov-btn>
   </div>
 </template>
 

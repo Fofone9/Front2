@@ -7,7 +7,7 @@
       <pavlov-btn @click="fetchCooks" :class="{active: dialogVisible}">Обновить</pavlov-btn>
       <div class="app-btns">
         <pavlov-select v-model="selectedSort" :options="sortOptions" :class="{active: dialogVisible}"></pavlov-select>
-        <pavlov-btn @click="showDialog" :class="{active: dialogVisible}">Добавить повара</pavlov-btn>
+        <pavlov-btn @click="showDialog" class="add-btn" :class="{active: dialogVisible}">Добавить повара</pavlov-btn>
       </div>      
       <pavlov-dialog v-model="dialogVisible">
         <cook-form @create="createcook"></cook-form>

@@ -16,6 +16,8 @@ export default {
   padding: 0;
   box-sizing: border-box;
   font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5;
 }
 body {
   background-color: #f6f6f6;

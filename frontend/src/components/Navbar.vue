@@ -21,11 +21,15 @@
 
 <style scoped>
 nav{
-    height: 70px;
+    
     background-color: teal;
     box-shadow: 2px 2px 4px gray;
     display: flex;
 
     justify-content: center;
+}
+
+.nav-btns{
+    margin-bottom: 15px;
 }
 </style>
