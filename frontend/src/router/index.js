@@ -13,9 +13,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'main',
-    component: MainPage,
-    meta: {requiresAuth: true}
+    redirect:'/dishes'
 
   },
   {
