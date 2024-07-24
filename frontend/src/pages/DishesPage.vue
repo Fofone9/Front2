@@ -113,6 +113,7 @@
                         label="Название"
                         v-model="dish.name"
                         hide-details="auto"
+                        color="#008080"
                     ></v-text-field>
                     <v-select
                         width="40%"
@@ -121,6 +122,7 @@
                         :items="types"
                         label="Тип блюда"
                         solo
+                        color="#008080"
                     ></v-select>
                     <v-select
                         width="40%"
@@ -129,7 +131,16 @@
                         :items="cooks"
                         label="Повар"
                         solo
+                        color="#008080"
                     ></v-select>
+                    <v-select
+                        v-model="dish.ingredients"
+                        :items="ingredients"
+                        label="Игредиенты"
+                        multiple
+                        color="#008080"
+                        >
+                    </v-select>
                     <v-btn
                         outlined
                         tile
@@ -219,9 +230,11 @@ import DishList from '@/components/DishList.vue';
                     name:'',
                     dish_type:'',
                     cook:'',
+                    ingredients: []
                 },
-                cooks:[],
-                types:[
+                cooks: [],
+                ingredients: [],
+                types: [
                 {value:'Bakery', text: 'Выпечка'},
                 {value:'Breakfast', text: 'Завтрак'},
                 {value:'Dessert', text: 'Десерт'},
@@ -254,13 +267,14 @@ import DishList from '@/components/DishList.vue';
                     name: dish.name,
                     dish_type: dish.dish_type,
                     author: dish.cook,
-                    ingredients: []
+                    ingredients: dish.ingredients
                 }
                 this.$ajax.post('dishes/', content)
                 .then(response => this.dishes.push({...dish, id:response.data.id}))
                 this.dish.name = ''
                 this.dish.cook = ''
                 this.dish.dish_type = ''
+                this.dish.ingredients = []
             },
             removeDish(dish){
                 this.$ajax.delete(`dishes/${dish.id}/`)
@@ -287,6 +301,14 @@ import DishList from '@/components/DishList.vue';
                 array.forEach(element => {
                     this.cooks.push({value:element.id, text: `${element.surname} ${element.name}`})
                 });
+            },
+            async fetchIngredients(){
+                
+                const response = await this.$ajax.get('ingredients/')
+                let array = response.data
+                array.forEach(element => {
+                    this.ingredients.push({value:element.id, text: `${element.name}`})
+                });
             }
         },
         watch: {
@@ -304,6 +326,7 @@ import DishList from '@/components/DishList.vue';
         mounted(){
             this.fetchDishes();
             this.fetchCooks();
+            this.fetchIngredients();
         }
                 
     }
