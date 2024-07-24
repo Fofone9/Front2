@@ -30,7 +30,7 @@ export const store = {
     actions: {
         async login({commit}, {username, password, router}) {
             try {
-                const response = await axios.post("http://fofone9.pythonanywhere.com/api-token-auth/", {
+                const response = await axios.post("https://fofone9.pythonanywhere.com/api-token-auth/", {
                   'username': username,
                   'password': password,
                 })
